@@ -29,9 +29,11 @@ FriendlyEats.prototype.addRating = function(restaurantID, rating) {
 };
 
 FriendlyEats.prototype.getRestaurant = function(id) {
-  /*
-    TODO: Retrieve a single restaraunt
-  */
+  return firebase
+    .firestore()
+    .collection("restaurants")
+    .doc(id)
+    .get();
 };
 
 FriendlyEats.prototype.getAllRestaurants = function(render) {
