@@ -16,9 +16,10 @@
 "use strict";
 
 FriendlyEats.prototype.addRestaurant = function(data) {
-  /*
-    TODO: Implement adding a document
-  */
+  FriendlyEats.prototype.addRestaurant = function(data) {
+    const collection = firebase.firestore().collection("restaurants");
+    return collection.add(data);
+  };
 };
 
 FriendlyEats.prototype.addRating = function(restaurantID, rating) {
