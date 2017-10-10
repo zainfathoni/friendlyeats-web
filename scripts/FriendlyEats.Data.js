@@ -35,9 +35,12 @@ FriendlyEats.prototype.getRestaurant = function(id) {
 };
 
 FriendlyEats.prototype.getAllRestaurants = function(render) {
-  /*
-    TODO: Retrieve list of restaurants
-  */
+  const query = firebase
+    .firestore()
+    .collection("restaurants")
+    .orderBy("avgRating", "desc")
+    .limit(50);
+  return this.getDocumentsInQuery(query, render);
 };
 
 FriendlyEats.prototype.getFilteredRestaurants = function(filters, render) {
@@ -47,7 +50,13 @@ FriendlyEats.prototype.getFilteredRestaurants = function(filters, render) {
 };
 
 FriendlyEats.prototype.getDocumentsInQuery = function(query, render) {
-  /*
-    TODO: Render all documents in the provided query
-  */
+  query.onSnapshot(snapshot => {
+    if (!snapshot.size) return render();
+
+    snapshot.docChanges.forEach(change => {
+      if (change.type === "added") {
+        render(change.doc);
+      }
+    });
+  });
 };
